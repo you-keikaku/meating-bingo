@@ -2,36 +2,53 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>若手のやる気を削る後ろ向き発言ビンゴ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会議の後ろ向きビンゴ</title>
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: sans-serif;
       text-align: center;
       background-color: #f5f5f5;
+      overflow-x: hidden;
     }
     h1 {
-      margin-top: 30px;
+      margin-top: 20px;
+      font-size: 20px;
+      padding: 0 10px;
+    }
+    #bingo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      box-sizing: border-box;
     }
     #bingo {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 5px;
+      width: 95vw;
       max-width: 600px;
-      margin: 30px auto;
     }
     .cell {
       background-color: white;
       border: 1px solid #ccc;
-      padding: 15px;
-      min-height: 80px;
+      padding: 10px;
+      aspect-ratio: 1 / 1;
       cursor: pointer;
       user-select: none;
       transition: background-color 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 12px;
       border-radius: 8px;
+      box-sizing: border-box;
+      word-break: break-word;
     }
     .marked {
       background-color: #a2d2ff;
@@ -47,7 +64,7 @@
     }
     #bingoMessage {
       display: none;
-      font-size: 48px;
+      font-size: 32px;
       color: #e63946;
       margin-top: 20px;
       animation: pop 0.5s ease-in-out infinite alternate;
@@ -59,10 +76,12 @@
   </style>
 </head>
 <body>
-  <h1>若手のやる気を削る後ろ向き発言ビンゴ</h1>
-  <div id="bingo"></div>
-  <div id="bingoMessage">🎉 BINGO! 🎉</div>
-  <button id="resetButton">ビンゴをリセット</button>
+  <h1>会議の後ろ向きビンゴ</h1>
+  <div id="bingo-container">
+    <div id="bingo"></div>
+    <div id="bingoMessage">🎉 BINGO! 🎉</div>
+    <button id="resetButton">ビンゴをリセット</button>
+  </div>
 
   <script>
     const phrases = [
@@ -109,15 +128,12 @@
       const marked = cells.map(cell => cell.classList.contains('marked'));
 
       const lines = [];
-      // 横
       for (let i = 0; i < 5; i++) {
         lines.push(marked.slice(i * 5, i * 5 + 5));
       }
-      // 縦
       for (let i = 0; i < 5; i++) {
         lines.push([marked[i], marked[i + 5], marked[i + 10], marked[i + 15], marked[i + 20]]);
       }
-      // 斜め
       lines.push([marked[0], marked[6], marked[12], marked[18], marked[24]]);
       lines.push([marked[4], marked[8], marked[12], marked[16], marked[20]]);
 
